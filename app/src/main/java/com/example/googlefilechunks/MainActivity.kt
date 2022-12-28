@@ -22,6 +22,9 @@ private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity()
 {
     lateinit var binding:ActivityMainBinding
+    var startBytes:Double = 0.0;
+    var endBytes:Double = 0.0;
+    var totalFileSize=0.0;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,23 +34,23 @@ class MainActivity : AppCompatActivity()
         binding.b1.setOnClickListener{
             GlobalScope.launch {
                 var serviceReq = ServiceInstance.getInstance().create(ApiInterface::class.java)
-                serviceReq.streamVideoFile("bytes=500-2900000",ServiceInstance.access_token).enqueue(object :Callback<ResponseBody>{
+                serviceReq.streamVideoFile("bytes=500-29000000",ServiceInstance.access_token).enqueue(object :Callback<ResponseBody>{
                     override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                         try {
                             if (response.isSuccessful)
                             {
                                 Log.d(TAG, "onResponse: Success")
-//                                val input: InputStream = response.body()!!.byteStream()
-//                                val file = File(cacheDir, "myVideo.mp4")
-//                                FileOutputStream(file).use { output ->
-//                                    val buffer = ByteArray(4 * 1024) // or other buffer size
-//                                    var read: Int
-//                                    while (input.read(buffer).also { read = it } != -1) {
-//                                        output.write(buffer, 0, read)
-//                                    }
-//                                    output.flush()
-//                                }
-//                                input.close()
+                                val input: InputStream = response.body()!!.byteStream()
+                                val file = File(cacheDir, "myVideo.mp4")
+                                FileOutputStream(file).use { output ->
+                                    val buffer = ByteArray(4 * 1024) // or other buffer size
+                                    var read: Int
+                                    while (input.read(buffer).also { read = it } != -1) {
+                                        output.write(buffer, 0, read)
+                                    }
+                                    output.flush()
+                                }
+                                input.close()
                             }else{
                                 Toast.makeText(this@MainActivity, "Error", Toast.LENGTH_SHORT).show()
                             }

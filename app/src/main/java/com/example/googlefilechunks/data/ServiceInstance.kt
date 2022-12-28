@@ -1,5 +1,6 @@
 package com.example.googlefilechunks.data
 
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,7 +12,7 @@ object ServiceInstance {
     var googleBaseUrl = "https://www.googleapis.com/drive/v3/";
     var productsBaseUrl = "https://fakestoreapi.com/";
     var endPoint:String = "19vdVjKzxCs2gn_OUoMP9-LGtUBCQOy0k?supportsAllDrives=true&alt=media"
-    var access_token:String = "Bearer ya29.a0AX9GBdUeDqDXjJOQbRTz3Di_-P3xduG_NcceDPPsDXC07OUGU7Sd8gMuogxjHxdbY2eCD7uOT9oCy4lGF5akciquNnKYnhRb25PxTgK3086Rc4_SjqbpF6s_iCleLz2uUAfwAKfglB_MCKzD-b4n5nIvcQvgaCgYKAVoSARESFQHUCsbCliqPdqCL64xJsHMttDzCxw0163";
+    var access_token:String = "Bearer ya29.a0AX9GBdWJDIXMpdb4Mv3rpi11Leg8tyEJheBqTnLkWTKq9sB9-Fjy5yQCYBrlmHRb-Z_Nx8u5f3Ys2YXFQOlJWBs06mzFRWfl9I6t5LmWbX7AiF58eZzllxs22T-2VMEJW-7AYf-D71STzOZP5GmyN403gj9_aCgYKARASARESFQHUCsbCB9SCF6C8_ahpDBwxu_AR1Q0163";
     fun getInstance(): Retrofit {
         var mHttpLoggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
@@ -20,9 +21,12 @@ object ServiceInstance {
             .addInterceptor(mHttpLoggingInterceptor)
             .build()
 
+        val gson = GsonBuilder()
+            .setLenient()
+            .create()
 
         var retrofit: Retrofit = retrofit2.Retrofit.Builder()
-            .baseUrl(productsBaseUrl)
+            .baseUrl(googleBaseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .client(mOkHttpClient)
             .build()

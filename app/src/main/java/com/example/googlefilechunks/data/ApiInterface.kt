@@ -7,9 +7,9 @@ import retrofit2.http.*
 
 interface ApiInterface {
 
-    @GET("/files/19vdVjKzxCs2gn_OUoMP9-LGtUBCQOy0k?supportsAllDrives=true&alt=media")
+    @GET("files/19vdVjKzxCs2gn_OUoMP9-LGtUBCQOy0k?supportsAllDrives=true&alt=media")
     @Streaming
-    suspend fun streamVideoFile(@Header("Range") range:String,
+    fun streamVideoFile(@Header("Range") range:String,
                                 @Header("Authorization") authHeader:String): Call<ResponseBody>
 
     @GET("products")
