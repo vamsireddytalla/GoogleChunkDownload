@@ -3,6 +3,7 @@ package com.example.googlefilechunks.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.example.googlefilechunks.R
 import com.example.googlefilechunks.data.ApiInterface
 import com.example.googlefilechunks.data.ServiceInstance
@@ -31,32 +32,30 @@ class SecondActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.get.setOnClickListener {
+            apiInterface = ServiceInstance.getInstance().create(ApiInterface::class.java)
             GlobalScope.launch(Dispatchers.IO) {
-                apiInterface = ServiceInstance.getInstance().create(ApiInterface::class.java)
                 getProducts()
             }
         }
-
         binding.post.setOnClickListener {
+            apiInterface = ServiceInstance.getInstance().create(ApiInterface::class.java)
             GlobalScope.launch(Dispatchers.IO) {
-                apiInterface = ServiceInstance.getInstance().create(ApiInterface::class.java)
                 addProduct()
             }
         }
-
         binding.update.setOnClickListener {
+            apiInterface = ServiceInstance.getInstance().create(ApiInterface::class.java)
             GlobalScope.launch(Dispatchers.IO) {
-                apiInterface = ServiceInstance.getInstance().create(ApiInterface::class.java)
                 updateProduct()
             }
         }
-
         binding.delete.setOnClickListener {
+            apiInterface = ServiceInstance.getInstance().create(ApiInterface::class.java)
             GlobalScope.launch(Dispatchers.IO) {
-                apiInterface = ServiceInstance.getInstance().create(ApiInterface::class.java)
                 deleteProduct()
             }
         }
+
 
     }
 
@@ -66,6 +65,7 @@ class SecondActivity : AppCompatActivity() {
                 Log.d(TAG, "***************GET SUCCESS *********************")
                 Log.d(TAG, "onResponse: Success ${response.body().toString()}")
             }
+
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.d(TAG, "onFailure: ${t.message}")
             }
@@ -73,11 +73,20 @@ class SecondActivity : AppCompatActivity() {
     }
 
     suspend fun addProduct() {
-        apiInterface.addProduct(ProductModel("test product",13.5,"lorem ipsum set","https://i.pravatar.cc","electronic")).enqueue(object : Callback<ResponseBody> {
+        apiInterface.addProduct(
+            ProductModel(
+                "test product",
+                13.5,
+                "lorem ipsum set",
+                "https://i.pravatar.cc",
+                "electronic"
+            )
+        ).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 Log.d(TAG, "***************POST SUCCESS *********************")
                 Log.d(TAG, "onResponse: Success ${response.body().toString()}")
             }
+
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.d(TAG, "onFailure: ${t.message}")
             }
@@ -85,11 +94,20 @@ class SecondActivity : AppCompatActivity() {
     }
 
     suspend fun updateProduct() {
-        apiInterface.updateProduct(ProductModel("test product",13.5,"lorem ipsum set","https://i.pravatar.cc","electronic")).enqueue(object : Callback<ResponseBody> {
+        apiInterface.updateProduct(
+            ProductModel(
+                "test product",
+                13.5,
+                "lorem ipsum set",
+                "https://i.pravatar.cc",
+                "electronic"
+            )
+        ).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 Log.d(TAG, "***************UPDATE SUCCESS *********************")
                 Log.d(TAG, "onResponse: Success ${response.body().toString()}")
             }
+
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.d(TAG, "onFailure: ${t.message}")
             }
@@ -102,6 +120,7 @@ class SecondActivity : AppCompatActivity() {
                 Log.d(TAG, "***************Delete SUCCESS *********************")
                 Log.d(TAG, "onResponse: Success ${response.body().toString()}")
             }
+
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.d(TAG, "onFailure: ${t.message}")
             }

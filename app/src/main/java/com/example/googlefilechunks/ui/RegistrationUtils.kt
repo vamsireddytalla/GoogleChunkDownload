@@ -2,7 +2,7 @@ package com.example.googlefilechunks.ui
 
 object RegistrationUtils
 {
-    private val existingUser = listOf<String>("vamsi","reddy")
+    private val existingUser = listOf<String>("vamsi","reddy","palni")
 
     fun validateRegistrationInput(userName:String,password:String,cnfPasword:String):Boolean
     {

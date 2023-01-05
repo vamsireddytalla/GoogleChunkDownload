@@ -23,5 +23,11 @@ class RegistrationUtilsTest {
         assertThat(result).isFalse()
     }
 
+    @Test
+    fun `test user name is palni`(){
+        val someResult = RegistrationUtils.validateRegistrationInput("palni","1234","1234")
+        assertThat(someResult).isFalse()
+    }
+
 
 }

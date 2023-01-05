@@ -19,26 +19,36 @@ import java.io.FileOutputStream
 import java.io.InputStream
 
 private const val TAG = "MainActivity"
-class MainActivity : AppCompatActivity()
-{
-    lateinit var binding:ActivityMainBinding
-    var startBytes:Double = 0.0;
-    var endBytes:Double = 0.0;
-    var totalFileSize=0.0;
+
+class MainActivity : AppCompatActivity() {
+    lateinit var binding: ActivityMainBinding
+    var startBytes: Double = 0.0;
+    var endBytes: Double = 0.0;
+    var totalFileSize = 0.0;
+    lateinit var serReq: ApiInterface
+    var count:Int=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        serReq = ServiceInstance.getInstance().create(ApiInterface::class.java)
+        binding.b1.setOnClickListener {
+            makeServCall()
+        }
 
-        binding.b1.setOnClickListener{
-            GlobalScope.launch {
-                var serviceReq = ServiceInstance.getInstance().create(ApiInterface::class.java)
-                serviceReq.streamVideoFile("bytes=500-29000000",ServiceInstance.access_token).enqueue(object :Callback<ResponseBody>{
-                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+    }
+
+    fun makeServCall() {
+        GlobalScope.launch {
+            serReq.streamVideoFile("bytes=500-29000000", ServiceInstance.access_token)
+                .enqueue(object : Callback<ResponseBody> {
+                    override fun onResponse(
+                        call: Call<ResponseBody>,
+                        response: Response<ResponseBody>
+                    ) {
                         try {
-                            if (response.isSuccessful)
-                            {
+                            if (response.isSuccessful) {
                                 Log.d(TAG, "onResponse: Success")
                                 val input: InputStream = response.body()!!.byteStream()
                                 val file = File(cacheDir, "myVideo.mp4")
@@ -51,20 +61,22 @@ class MainActivity : AppCompatActivity()
                                     output.flush()
                                 }
                                 input.close()
-                            }else{
-                                Toast.makeText(this@MainActivity, "Error", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(this@MainActivity, "Error", Toast.LENGTH_SHORT)
+                                    .show()
                             }
-                        }catch (e:Exception){
+                        } catch (e: Exception) {
                             e.printStackTrace()
-                        }finally {
-
+                        } finally {
+                            count++
+                            makeServCall()
+                            binding.t1.text = "Total api calls done $count"
                         }
                     }
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                         Log.d(TAG, "onFailure: ${t.message}")
                     }
                 })
-            }
         }
 
     }

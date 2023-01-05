@@ -9,10 +9,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ServiceInstance {
 
-    var googleBaseUrl = "https://www.googleapis.com/drive/v3/";
+    var googleBaseUrl = "https://www.googleapis.com/drive/v3/files/";
     var productsBaseUrl = "https://fakestoreapi.com/";
-    var endPoint:String = "19vdVjKzxCs2gn_OUoMP9-LGtUBCQOy0k?supportsAllDrives=true&alt=media"
-    var access_token:String = "Bearer ya29.a0AX9GBdWJDIXMpdb4Mv3rpi11Leg8tyEJheBqTnLkWTKq9sB9-Fjy5yQCYBrlmHRb-Z_Nx8u5f3Ys2YXFQOlJWBs06mzFRWfl9I6t5LmWbX7AiF58eZzllxs22T-2VMEJW-7AYf-D71STzOZP5GmyN403gj9_aCgYKARASARESFQHUCsbCB9SCF6C8_ahpDBwxu_AR1Q0163";
+    var endPoint:String = "11xy6_hKvulrXn9Sv6tVDEGP74zx6wrBv?supportsAllDrives=true&alt=media"
+    var access_token:String = "Bearer ya29.a0AX9GBdW75Wyvt1lmDGltllTfE4bOk87jaVlmERt_c5n8acgAp_Lc643lKo1h-g52VaRkJCb7xhq_gylWgBkrWlV0BQeTeSjioUZhiffzGqLNH6P-Vew5vDPcMJOIJMu9dtMyy2lZp7S5y8lu9uct5jx_YFD_6d4aCgYKATUSAQASFQHUCsbCQNPXGKoHvuJowWWbccj53Q0166";
     fun getInstance(): Retrofit {
         var mHttpLoggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 

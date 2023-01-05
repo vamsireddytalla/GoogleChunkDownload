@@ -24,7 +24,7 @@ interface ApiInterface {
     fun updateProduct(@Body productModel:ProductModel):Call<ResponseBody>
 
 
-    @PUT("delete/{id}")
+    @DELETE("delete/{id}")
     fun deleteProduct(@Path("id") id:Int):Call<ResponseBody>
 
 }
